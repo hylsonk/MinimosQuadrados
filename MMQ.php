@@ -10,25 +10,52 @@ require_once('Gauss.php');
 
 class MMQ
 {
+    private $coef;
 
-    function fazMMQ($x,$y){
+    function fazMMQ($x,$y,$grau){
         $matriz = new Matriz();
         $gauss = new Gauss();
-        $A1 = $this->fazA($x,1);
+        $A1 = $this->fazA($x,$grau);
         $transposta = $matriz->transposta($A1);
         $A= $matriz->multiplicaMatrizes($transposta,$A1);
         $B = $matriz->multiplicaMatrizEVetor($transposta,$y);
         $coef = $gauss->ElGauss($A,$B);
-        return $coef;
+
+        $pontos[] = new ArrayObject();
+        for ($i = 0; $i < 16; $i++){
+//            json_encode(new Ponto($i,$this->funcao($coef,$grau,$i)));
+            $pontos[$i] = $this->funcao($coef,$grau,$i);
+        }
+
+        return $pontos;
     }
 
-    function fazA($x,$ordem){
+    function fazA($x,$grau){
         for ($i =0; $i<count($x);$i++){
-            for ($j=0;$j<=$ordem;$j++){
-                $A[$i][$j] = pow($x[$i],$ordem-$j);
+            for ($j=0;$j<=$grau;$j++){
+                $A[$i][$j] = pow($x[$i],$grau-$j);
             }
         }
         return $A;
+    }
+
+    function printFuncao($coef,$grau){
+        $funcao = "y =";
+        print $funcao;
+        for ($i = 0; $i<=$grau;$i++){
+            print $coef[$grau-$i];
+            print "x^(".($i).")+";
+        }
+        print "<br>";
+    }
+
+    function funcao($coef,$grau,$x){
+
+        $y = 0;
+        for ($i = 0; $i<=$grau;$i++){
+            $y = $coef[$grau-$i]*pow($x,$i);
+        }
+        return $y;
     }
 
 
