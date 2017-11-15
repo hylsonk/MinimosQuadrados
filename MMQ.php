@@ -21,10 +21,10 @@ class MMQ
         $B = $matriz->multiplicaMatrizEVetor($transposta,$y);
         $coef = $gauss->ElGauss($A,$B);
 
-        $pontos[] = new ArrayObject();
+        $pontos = new ArrayObject();
         for ($i = 0; $i < 16; $i++){
 //            json_encode(new Ponto($i,$this->funcao($coef,$grau,$i)));
-            $pontos[$i] = $this->funcao($coef,$grau,$i);
+            $pontos[] = $this->funcao($coef,$grau,$i);
         }
 
         return $pontos;
