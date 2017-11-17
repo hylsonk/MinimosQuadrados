@@ -5,7 +5,7 @@
  * Date: 12/11/2017
  * Time: 18:47
  */
-
+namespace Matriz\Classe;
 class Matriz
 {
     /**

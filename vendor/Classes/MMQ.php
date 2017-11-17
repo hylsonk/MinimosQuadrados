@@ -19,6 +19,15 @@ class MMQ
         $transposta = $matriz->transposta($A1);
         $A= $matriz->multiplicaMatrizes($transposta,$A1);
         $B = $matriz->multiplicaMatrizEVetor($transposta,$y);
+//        echo "<pre>";
+//        echo count($A1);
+//        echo "</pre>";
+//        echo "<pre>";
+//        echo count($B);
+//        echo "</pre>";
+//        echo "<pre>";
+//        echo count($A);
+//        echo "</pre>";
         $coef = $gauss->ElGauss($A,$B);
 
         $pontos = new ArrayObject();
@@ -26,6 +35,8 @@ class MMQ
 //            json_encode(new Ponto($i,$this->funcao($coef,$grau,$i)));
             $pontos[] = $this->funcao($coef,$grau,$i);
         }
+
+//        $this->printFuncao($coef,$grau);
 
         return $pontos;
     }
@@ -50,7 +61,6 @@ class MMQ
     }
 
     function funcao($coef,$grau,$x){
-
         $y = 0;
         for ($i = 0; $i<=$grau;$i++){
             $y = $coef[$grau-$i]*pow($x,$i);

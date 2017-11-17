@@ -1,0 +1,10 @@
+{
+    "autoload":{
+      "psr-4":{
+          "Classes\\":"Classes"
+      }
+    },
+    "require": {
+        "numphp/numphp": "^1.1"
+    }
+}
