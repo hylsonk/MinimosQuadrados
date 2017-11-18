@@ -24,7 +24,9 @@ class MMQ
                 }
                 $matrixA->set($i,$grau-$j,$factor);
             }
+
         }
+        echo $matrixA;
         return $matrixA;
     }
 
@@ -34,7 +36,10 @@ class MMQ
         $TB = $matrizA->getTranspose();
         $TA->dot($matrizA);
         $TB->dot($vectorY);
-        $lin = LinAlg::solve($TA,$TB);
+
+        $lin = LinAlg::inv($TA);
+        $lin->dot($TB);
+        echo $lin;
         return $lin;
     }
 
@@ -46,7 +51,7 @@ class MMQ
             }
             $pontos[$i] = $Y;
         }
-        print $coef->get(0)."*X + ".$coef->get(1);
+//        print $coef->get(0)."*X + ".$coef->get(1);
         echo json_encode($pontos);
 //        return $pontos;
     }
