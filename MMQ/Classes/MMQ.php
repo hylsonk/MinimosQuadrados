@@ -26,29 +26,33 @@ class MMQ
             }
 
         }
-        echo $matrixA;
+//        echo $matrixA;
         return $matrixA;
     }
 
     public function fazMMQ(NumArray $vectorX,NumArray $vectorY, $grau = 1){
         $matrizA = $this->calculaA($vectorX,$grau);
+
+        $lnY = \NumPHP\Core\NumPHP::zeros($vectorY->getSize());
+        for ($i = 0 ; $i < $vectorY->getSize(); $i++){
+            $lnY->set($i, log($vectorY->get($i)->getData()));
+        }
+
         $TA = $matrizA->getTranspose();
         $TB = $matrizA->getTranspose();
         $TA->dot($matrizA);
-        $TB->dot($vectorY);
+        $TB->dot($lnY);
 
-        $lin = LinAlg::inv($TA);
-        $lin->dot($TB);
-        echo $lin;
+        $lin = LinAlg::solve($TA,$TB);
+//        echo "oi";
+        $lin->set(1,exp($lin->get(1)->getData()));
+//        echo $lin;
         return $lin;
     }
 
     public function geraPontosDaFuncao(NumArray $coef,$numPontos){
         for ($i = 0;$i < $numPontos; $i++){
-            $Y = 0;
-            for ($j = 0; $j < $coef->getSize(); $j++){
-                $Y = $Y+(((float)$coef->get($j)->getData($j))*pow($i,$coef->getSize()-$j));
-            }
+            $Y = $coef->get(1)->getData()*exp($i*$coef->get(0)->getData());
             $pontos[$i] = $Y;
         }
 //        print $coef->get(0)."*X + ".$coef->get(1);
